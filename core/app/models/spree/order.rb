@@ -28,7 +28,7 @@ module Spree
 
     attr_accessible :line_items, :bill_address_attributes, :ship_address_attributes,
                     :payments_attributes, :ship_address, :bill_address, :currency,
-                    :line_items_attributes, :number, :email, :use_billing, 
+                    :line_items_attributes, :number, :email, :use_billing,
                     :special_instructions, :shipments_attributes, :coupon_code
 
     attr_reader :coupon_code
@@ -56,7 +56,7 @@ module Spree
     end
 
     has_many :return_authorizations, dependent: :destroy
-    has_many :adjustments, 
+    has_many :adjustments,
       as: :adjustable,
       dependent: :destroy,
       order: "#{Spree::Adjustment.table_name}.created_at ASC",
@@ -567,7 +567,7 @@ module Spree
       end
 
       def ensure_available_shipping_rates
-        if shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
+        if shipments.empty? || shipments.all? { |shipment| shipment.shipping_rates.blank? }
           errors.add(:base, Spree.t(:items_cannot_be_shipped)) and return false
         end
       end
